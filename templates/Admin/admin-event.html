@@ -1,0 +1,94 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">Events</h3>
+                            <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'Admin:admindashboard' %}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Events</li>
+                            </ul>
+                        </div>
+                        <div class="col-auto text-right float-right ml-auto">
+                            <a href="{% url 'Admin:addevent' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-table">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-center mb-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Event Name</th>
+                                                <th>Description</th>
+                                                <th>Date</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for event in events %} 
+                                                <tr>
+                                                    <td>{{forloop.counter}}</td>
+                                                    <td>
+                                                        <h2>
+                                                            <a>{{event.title}}</a>
+                                                        </h2>   
+                                                    </td>
+                                                    <td>{{event.description}}</td>
+                                                    <td>{{event.date}}</td>
+                                                    <td>{{event.start_time}}</td>
+                                                    <td>{{event.end_time}}</td>
+                                                    <td class="text-center">
+                                                        <div class="actions">
+                                                            <a href="{% url 'Admin:editevent' event.pk %}" class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-pen"></i>
+                                                            </a>
+                                                            <a class="btn btn-sm bg-danger-light" data-target="#infoModal_{{ event.pk }}" data-toggle="modal" >
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>  
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- Delete Pop up Modal -->
+                                                <div class="modal fade" id="infoModal_{{ event.pk }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="modalLabel">Confirm Delete</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body"> 
+                                                                <p>Are You Sure You Want To Delete <b>{{event.title}}&nbsp;</b>Event.</p> 
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form method="post" action="{% url 'Admin:deleteevent' event.pk %}">
+                                                                    {% csrf_token %}
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Delete Pop up Modal -->
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}   

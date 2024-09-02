@@ -1,0 +1,126 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Add Holiday</h3>
+                                <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'Admin:holidaylist' %}">Holiday</a></li>
+                                <li class="breadcrumb-item active">Add Holiday</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <!-- {{form.as_p}} -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Holiday Information</span></h5>
+                                            </div>
+                                        
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="id_name"><b>Name</b></label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                                                        name="name"
+                                                        id="id_name"
+                                                        placeholder="Enter Name"
+                                                        value="{{ form.name.value|default_if_none:'' }}"
+                                                    >
+                                                    {% if form.name.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.name.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_start_date"><b>Start Date</b></label>
+                                                    <input
+                                                        type="date"
+                                                        class="form-control{% if form.start_date.errors %} is-invalid{% endif %}"
+                                                        name="start_date"
+                                                        id="id_start_date"
+                                                        placeholder="Select Start Date"
+                                                        value="{{ form.start_date.value|date:'Y-m-d'|default_if_none:'' }}"
+                                                    >
+                                                    {% if form.start_date.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.start_date.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_end_date"><b>End Date</b></label>
+                                                    <input
+                                                        type="date"
+                                                        class="form-control{% if form.end_date.errors %} is-invalid{% endif %}"
+                                                        name="end_date"
+                                                        id="id_end_date"
+                                                        placeholder="Select End Date"
+                                                        value="{{ form.end_date.value|date:'Y-m-d'|default_if_none:'' }}"
+                                                        min="{{ today|date:'Y-m-d' }}"
+                                                    >
+                                                    {% if form.end_date.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.end_date.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="id_description"><b>Description</b></label>
+                                                    <textarea
+                                                        class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                                                        name="description"
+                                                        id="id_description"
+                                                        cols="40"
+                                                        rows="10"
+                                                        required
+                                                        placeholder="Enter Description"
+                                                    >{{ form.description.value|default_if_none:'' }}</textarea>
+                                                    {% if form.description.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.description.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

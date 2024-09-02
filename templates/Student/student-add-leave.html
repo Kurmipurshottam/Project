@@ -1,0 +1,104 @@
+{% extends "Student/student-base.html" %}
+{% load static %}
+{% block content %} 
+<!-- STYAHI64  STEMDE60
+YAS31HI58    EME71DE65-->
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">Add Leaves</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item active"><a href="student-apply-leaves.html">Leaves List</a></li>
+                                <li class="breadcrumb-item active"><a href="add-leaves.html">Apply For Leaves</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <!-- {{form.as_p}} -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="form-title"><span>Leave Information</span></h5>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="id_start_date"><b>Start Date</b></label>
+                                                <input
+                                                    type="date"
+                                                    class="form-control{% if form.start_date.errors %} is-invalid{% endif %}"
+                                                    name="start_date"
+                                                    id="id_start_date"
+                                                    placeholder="Select Start Date"
+                                                    value="{{ form.start_date.value|default_if_none:'' }}"
+                                                >
+                                                {% if form.start_date.errors %}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.start_date.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="id_end_date"><b>End Date</b></label>
+                                                <input
+                                                    type="date"
+                                                    class="form-control{% if form.end_date.errors %} is-invalid{% endif %}"
+                                                    name="end_date"
+                                                    id="id_end_date"
+                                                    placeholder="Select End Date"
+                                                    value="{{ form.end_date.value|default_if_none:'' }}"
+                                                >
+                                                {% if form.end_date.errors %}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.end_date.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="id_reason"><b>Reason</b></label>
+                                                <textarea
+                                                    class="form-control{% if form.reason.errors %} is-invalid{% endif %}"
+                                                    name="reason"
+                                                    id="id_reason"
+                                                    cols="10"
+                                                    rows="5"
+                                                >{{ form.reason.value|default_if_none:'' }}</textarea>
+                                                {% if form.reason.errors %}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.reason.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+{% endblock %}  

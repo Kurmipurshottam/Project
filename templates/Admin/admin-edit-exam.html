@@ -1,0 +1,157 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Edit Exam</h3>
+                                <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'Admin:examlist' %}">Exam</a></li>
+                                <li class="breadcrumb-item active">Edit Exam</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <!-- {{form.as_p}} -->
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_date"><b>Date</b></label>
+                                                    <input 
+                                                        class="form-control{% if form.date.errors %} is-invalid{% endif %}"
+                                                        name="date"
+                                                        id="id_date"
+                                                        type="date"
+                                                        placeholder="Select Date"
+                                                        value="{{ form.date.value|date:'Y-m-d' }}"
+                                                        required
+                                                    >
+                                                    {% if form.date.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.date.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_start_time"><b>Start Time</b></label>
+                                                    <input 
+                                                        class="form-control{% if form.start_time.errors %} is-invalid{% endif %}"
+                                                        name="start_time"
+                                                        id="id_start_time"
+                                                        type="time"
+                                                        placeholder="Select Start Time"
+                                                        value="{{ form.start_time.value|time:"H:i"  }}"
+                                                        required
+                                                    >
+                                                    {% if form.start_time.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.start_time.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_end_time"><b>End Time</b></label>
+                                                    <input 
+                                                        class="form-control{% if form.end_time.errors %} is-invalid{% endif %}"
+                                                        name="end_time"
+                                                        id="id_end_time"
+                                                        type="time"
+                                                        placeholder="Select End Time"
+                                                        value="{{ form.end_time.value|time:"H:i"  }}"
+                                                        required
+                                                    >
+                                                    {% if form.end_time.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.end_time.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_standard"><b>Standard</b></label>
+                                                    <select 
+                                                        class="form-control{% if form.standard.errors %} is-invalid{% endif %}"
+                                                        name="standard"
+                                                        id="id_standard"
+                                                        required
+                                                    >
+                                                        <option value="1" {% if form.standard.value|stringformat:"s" == '1' %}selected{% endif %}>Standard 1</option>
+                                                        <option value="2" {% if form.standard.value|stringformat:"s" == '2' %}selected{% endif %}>Standard 2</option>
+                                                        <option value="3" {% if form.standard.value|stringformat:"s" == '3' %}selected{% endif %}>Standard 3</option>
+                                                        <option value="4" {% if form.standard.value|stringformat:"s" == '4' %}selected{% endif %}>Standard 4</option>
+                                                        <option value="5" {% if form.standard.value|stringformat:"s" == '5' %}selected{% endif %}>Standard 5</option>
+                                                        <option value="6" {% if form.standard.value|stringformat:"s" == '6' %}selected{% endif %}>Standard 6</option>
+                                                        <option value="7" {% if form.standard.value|stringformat:"s" == '7' %}selected{% endif %}>Standard 7</option>
+                                                        <option value="8" {% if form.standard.value|stringformat:"s" == '8' %}selected{% endif %}>Standard 8</option>
+                                                        <option value="9" {% if form.standard.value|stringformat:"s" == '9' %}selected{% endif %}>Standard 9</option>
+                                                        <option value="10" {% if form.standard.value|stringformat:"s" == '10' %}selected{% endif %}>Standard 10</option>
+                                                        <option value="11" {% if form.standard.value|stringformat:"s" == '11' %}selected{% endif %}>Standard 11</option>
+                                                        <option value="12" {% if form.standard.value|stringformat:"s" == '12' %}selected{% endif %}>Standard 12</option>
+                                                    </select>
+                                                    {% if form.standard.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.standard.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="id_exam_type"><b>Exam Type</b></label>
+                                                    <select 
+                                                        class="form-control{% if form.exam_type.errors %} is-invalid{% endif %}"
+                                                        name="exam_type"
+                                                        id="id_exam_type"
+                                                        required
+                                                    >
+                                                        <option value="" {% if not form.exam_type.value %}selected{% endif %}>Select Exam Type</option>
+                                                        <option value="Final Exam" {% if form.exam_type.value == 'Final Exam' %}selected{% endif %}>Final Exam</option>
+                                                        <option value="Midterm Exam" {% if form.exam_type.value == 'Midterm Exam' %}selected{% endif %}>Midterm Exam</option>
+                                                    </select>
+                                                    {% if form.exam_type.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.exam_type.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}   

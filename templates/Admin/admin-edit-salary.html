@@ -1,0 +1,133 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Edit Salary</h3>
+                                <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'Admin:admindashboard' %}">Salary</a></li>
+                                <li class="breadcrumb-item active">Edit Salary</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ form.non_field_errors }}
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Salary Information</span></h5>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="{{ form.teacher.id_for_label }}"><b>Teacher</b></label>
+                                                    <select
+                                                        class="form-control{% if form.teacher.errors %} is-invalid{% endif %}"
+                                                        name="teacher"
+                                                        id="{{ form.teacher.id_for_label }}"
+                                                        required
+                                                    >
+                                                        <option value="">Select Teacher</option>
+                                                        {% for teacher in form.teacher.field.queryset %}
+                                                            <option value="{{ teacher.pk }}" {% if teacher.pk == form.teacher.value %}selected{% endif %}>
+                                                                {{ teacher }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    {% if form.teacher.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.teacher.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="{{ form.amount.id_for_label }}"><b>Amount</b></label>
+                                                    <input
+                                                        class="form-control{% if form.amount.errors %} is-invalid{% endif %}"
+                                                        type="number"
+                                                        name="amount"
+                                                        id="{{ form.amount.id_for_label }}"
+                                                        step="0.01"
+                                                        placeholder="Enter Amount"
+                                                        value="{{ form.amount.value|default_if_none:'' }}"
+                                                        required
+                                                    >
+                                                    {% if form.amount.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.amount.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="{{ form.paid_date.id_for_label }}"><b>Paid Date</b></label>
+                                                    <input
+                                                        class="form-control{% if form.paid_date.errors %} is-invalid{% endif %}"
+                                                        type="date"
+                                                        name="paid_date"
+                                                        id="{{ form.paid_date.id_for_label }}"
+                                                        placeholder="Select Paid Date"
+                                                        value="{{ form.paid_date.value|date:'Y-m-d' }}"
+                                                    >
+                                                    {% if form.paid_date.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.paid_date.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="{{ form.status.id_for_label }}"><b>Status</b></label>
+                                                    <select
+                                                        class="form-control{% if form.status.errors %} is-invalid{% endif %}"
+                                                        name="status"
+                                                        id="{{ form.status.id_for_label }}"
+                                                        required
+                                                    >
+                                                        <option value="" {% if not form.status.value %}selected{% endif %}>Select Status</option>
+                                                        <option value="Paid" {% if form.status.value == 'Paid' %}selected{% endif %}>Paid</option>
+                                                        <option value="Pending" {% if form.status.value == 'Pending' %}selected{% endif %}>Pending</option>
+                                                    </select>
+                                                    {% if form.status.errors %}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.status.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+        

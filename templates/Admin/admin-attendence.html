@@ -1,0 +1,61 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Attendence</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="{% url 'Admin:admindashboard' %}">Dashboard</a></li>
+                           <li class="breadcrumb-item active">Studnt Attendence</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                        <div class="card card-table">
+                           <div class="card-body">
+                           <div class="table-responsive">
+                                 <table class="table table-hover table-center mb-0 datatable">
+                                    <thead>
+                                       <tr>
+                                       <th>ID</th>
+                                       <th>Name</th>
+                                       <th>Gender</th>
+                                       <th>Date</th>
+                                       <th class="text-center">Status</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for attendance in attendance  %}
+                                          <tr>
+                                             <td>{{attendance.student.user.Login_id}}</td>
+                                             <td>
+                                                   <h2 class="table-avatar">
+                                                      <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{attendance.student.user.profile_image.url}}" alt="User Image"></a>
+                                                      <a>{{attendance.student.user.first_name}}&nbsp;{{attendance.student.user.last_name}}</a>
+                                                   </h2>
+                                             </td>
+                                             <td class="text-left">{{attendance.student.user.gender}}</td>   
+                                             <td>{{attendance.date}}</td>
+                                             
+                                             <td class="text-right">
+                                                {% if attendance.status == "Present" %}
+                                                   <h5 class="text-center"><span class="badge badge-success">{{attendance.status}}</span></h5>
+                                                {% else %}
+                                                   <h5 class="text-center"><span class="badge badge-danger">{{attendance.status}}</span></h5>
+                                                {% endif %}
+                                             </td>
+                                          </tr>
+                                       {% endfor %}
+                                    </tbody>
+                              </table>
+                           </div>
+                           </div>
+                        </div>
+                  </div>
+               </div>
+{% endblock %}  

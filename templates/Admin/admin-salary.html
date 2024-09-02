@@ -1,0 +1,106 @@
+{% extends "Admin/admin-base.html" %}
+{% load static %}
+{% block content %}
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Salary</h3>
+                                <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'Admin:admindashboard' %}"">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Salary</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto text-right float-right ml-auto">
+                                <a href="{% url 'Admin:addsalary' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0 datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Gender</th>
+                                                    <th>Amount</th>
+                                                    <th>Paid Date</th>
+                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for salary in salarys %} 
+                                                    <tr>
+                                                        <td>{{salary.teacher.user.Login_id}}</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{salary.teacher.user.profile_image.url}}" alt="User Image"></a>
+                                                                <a>{{salary.teacher.user.first_name}}&nbsp;{{salary.teacher.user.last_name}}</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>{{salary.teacher.user.gender}}</td>
+                                                        <td>{{salary.amount}}</td>
+                                                        {% if salary.paid_date == None %}
+                                                            <td>--</td>
+                                                        {% else %}
+                                                            <td>{{salary.paid_date}}</td>
+                                                        {% endif %}
+                                                        <td class="text-center">
+                                                            {% if salary.status == "Paid" %}
+                                                                <h5 class="text-center"><span class="badge badge-success">{{salary.status}}</span></h5>
+                                                            {% else %}
+                                                                <h5 class="text-center"><span class="badge badge-primary">{{salary.status}}</span></h5>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div class="actions">
+                                                                <a href="{% url 'Admin:editsalary' salary.pk %}" class="btn btn-sm bg-success-light mr-2">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-target="#infoModal_{{ salary.pk }}" data-toggle="modal" >
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Delete Pop up Modal -->
+                                                    <div class="modal fade" id="infoModal_{{ salary.pk }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modalLabel">Confirm Delete</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body"> 
+                                                                    <p>Are You Sure You Want To Delete <b>{{salary.teacher.user.first_name}}&nbsp;{{salary.teacher.user.last_name}}&nbsp;</b>Salary.</p> 
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form method="post" action="{% url 'Admin:deletesalary' salary.pk %}">
+                                                                        {% csrf_token %}
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- End Delete Pop up Modal -->
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
