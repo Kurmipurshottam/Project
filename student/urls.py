@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 from student.views  import *
 
 app_name = 'Student'
@@ -26,4 +27,7 @@ urlpatterns = [
     path('leave/add/', AddLeave.as_view(), name='addleave'),
     path('leave/delete/<int:pk>/', DeleteLeave.as_view(), name='deleteleave'),
     path('leave/edit/<int:pk>/', EditLeave.as_view(), name='editleave'),
+    path('demo/', Demoview.as_view(), name='demo'),
+    path("create-payment-intent/", CreatePaymentIntentView.as_view(), name="create_payment_intent"),
+     path('save_payment/', views.save_payment, name='save_payment'),
 ]

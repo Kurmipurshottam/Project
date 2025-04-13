@@ -10,3 +10,6 @@ class StudentAdmin(admin.ModelAdmin):
 @admin.register(Standard)
 class StandardAdmin(admin.ModelAdmin):
     list_display = ('teacher', 'standard')
+
+admin.site.register(Demo)
+admin.site.register(Payment)

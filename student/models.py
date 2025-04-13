@@ -97,5 +97,61 @@ class Student(BaseModel):
 
             super(Student, self).save(*args, **kwargs)
 
-    
+class Demo(models.Model):
+    text = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    email = models.EmailField()
+    url = models.URLField()
+    tel = models.CharField(max_length=15)
+    number = models.IntegerField()
+    range = models.IntegerField()
+    date = models.DateField()
+    time = models.TimeField()
+    datetime = models.DateTimeField()
+    month = models.CharField(max_length=7)  # e.g. "2025-04"
+    week = models.CharField(max_length=8)   # e.g. "2025-W15"
+    checkbox1 = models.BooleanField(default=False)
+    checkbox2 = models.BooleanField(default=False)
+    radio = models.CharField(max_length=10, choices=[("1", "Radio 1"), ("2", "Radio 2")])
+    file = models.FileField(upload_to='uploads/')
+    select = models.CharField(max_length=20, choices=[("option1", "Option 1"), ("option2", "Option 2")])
+    textarea = models.TextField()
+    hidden = models.CharField(max_length=100, default="secret")
+
+    def __str__(self):
+        return self.text
+
+from django.db import models
+
+class Payment(models.Model):
+    PAYMENT_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+    ]
+
+    PAYMENT_METHOD_CHOICES = [
+        ('card', 'Card'),
+        ('cheque', 'Cheque'),
+    ]
+
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD_CHOICES)  # New field to identify method
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_intent_id = models.CharField(max_length=255, unique=True, null=True, blank=True)  # Only for card
+    customer_id = models.CharField(max_length=255, null=True, blank=True)  # Optional: Stripe customer ID
+    last_4_digits = models.CharField(max_length=4, null=True, blank=True)  # Only for card
+    card_type = models.CharField(max_length=50, null=True, blank=True)  # Visa, MasterCard, etc.
+    expiration_date = models.CharField(max_length=7, null=True, blank=True)  # MM/YY format
+    transaction_id = models.CharField(max_length=255, unique=True, null=True, blank=True)  # Only for card
+
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.payment_method.capitalize()} Payment - {self.payment_status}"
+
+    class Meta:
+        verbose_name = 'Payment'
+        verbose_name_plural = 'Payments'
 
